@@ -7,7 +7,9 @@ const Page = () => {
     const sendBooleanToParent = () => {
         const newValue = !boolValue;
         setBoolValue(newValue);
-        window.parent && window.parent.postMessage(newValue, '*');
+        if (typeof window !== 'undefined' && window.parent) {
+            window.parent.postMessage(newValue, '*');
+        }
     };
 
     return(
