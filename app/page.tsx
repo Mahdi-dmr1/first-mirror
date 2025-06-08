@@ -9,7 +9,11 @@ const Page = () => {
             window.parent.postMessage('Hello from iframe', '*');
         }
         const handleMessage = (event: MessageEvent) => {
-            setReceivedMessage(event.data);
+            let msg = event.data;
+            if (typeof msg === 'object') {
+                msg = JSON.stringify(msg);
+            }
+            setReceivedMessage(msg);
         };
         window.addEventListener('message', handleMessage);
         return () => {
