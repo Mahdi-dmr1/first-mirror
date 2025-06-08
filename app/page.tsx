@@ -1,14 +1,9 @@
 "use client"
-import { useState } from 'react';
 
 const Page = () => {
-    const [boolValue, setBoolValue] = useState<boolean>(false);
-
     const sendBooleanToParent = () => {
-        const newValue = !boolValue;
-        setBoolValue(newValue);
         if (typeof window !== 'undefined' && window.parent) {
-            window.parent.postMessage(newValue, '*');
+            window.parent.postMessage(true, '*');
         }
     };
 
@@ -20,7 +15,7 @@ const Page = () => {
                     className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
                     onClick={sendBooleanToParent}
                 >
-                    Send Boolean ({boolValue ? 'true' : 'false'}) to Parent
+                    Open
                 </button>
             </div>
         </div>
