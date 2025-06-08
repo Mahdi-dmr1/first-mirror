@@ -1,11 +1,20 @@
 "use client"
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const Page = () => {
+    const [receivedMessage, setReceivedMessage] = useState<string>("");
+
     useEffect(() => {
         if (window.parent) {
             window.parent.postMessage('Hello from iframe', '*');
         }
+        const handleMessage = (event: MessageEvent) => {
+            setReceivedMessage(event.data);
+        };
+        window.addEventListener('message', handleMessage);
+        return () => {
+            window.removeEventListener('message', handleMessage);
+        };
     }, []);
 
     return(
@@ -18,6 +27,7 @@ const Page = () => {
                 >
                     Send Message to Parent
                 </button>
+                <div className="mt-4 text-black">Message from parent: {receivedMessage}</div>
             </div>
         </div>
     )
