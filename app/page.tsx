@@ -1,25 +1,16 @@
 "use client"
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const Page = () => {
-    const [receivedMessage, setReceivedMessage] = useState<string>("");
+    const [boolValue, setBoolValue] = useState<boolean>(false);
 
-    useEffect(() => {
-        if (window.parent) {
-            window.parent.postMessage('Hello from iframe', '*');
-        }
-        const handleMessage = (event: MessageEvent) => {
-            let msg = event.data;
-            if (typeof msg === 'object') {
-                msg = JSON.stringify(msg);
-            }
-            setReceivedMessage(msg);
-        };
-        window.addEventListener('message', handleMessage);
-        return () => {
-            window.removeEventListener('message', handleMessage);
-        };
-    }, []);
+    console.log(boolValue);
+
+    const sendBooleanToParent = () => {
+        const newValue = !boolValue;
+        setBoolValue(newValue);
+        window.parent && window.parent.postMessage(newValue, '*');
+    };
 
     return(
         <div className="h-dvh w-full flex justify-center items-center">
@@ -27,11 +18,10 @@ const Page = () => {
                 <p className="text-2xl text-black font-semibold">Hello World this is first mirror</p>
                 <button
                     className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-                    onClick={() => window.parent && window.parent.postMessage('Button clicked from iframe', '*')}
+                    onClick={sendBooleanToParent}
                 >
-                    Send Message to Parent
+                    Send Boolean ({boolValue ? 'true' : 'false'}) to Parent
                 </button>
-                <div className="mt-4 text-black">Message from parent: {receivedMessage}</div>
             </div>
         </div>
     )
