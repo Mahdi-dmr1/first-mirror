@@ -1,4 +1,5 @@
 const Page = () => {
+    window.parent.postMessage('Hello from iframe', '*');
     return(
         <div className="h-dvh w-full flex justify-center items-center">
             <div className="w-1/3 bg-gray-200 flex justify-center h-full items-center">
