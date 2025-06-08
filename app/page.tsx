@@ -4,8 +4,6 @@ import { useState } from 'react';
 const Page = () => {
     const [boolValue, setBoolValue] = useState<boolean>(false);
 
-    console.log(boolValue);
-
     const sendBooleanToParent = () => {
         const newValue = !boolValue;
         setBoolValue(newValue);
