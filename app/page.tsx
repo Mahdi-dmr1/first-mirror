@@ -33,7 +33,7 @@ const Page = () => {
                     Open
                 </button>
                 <pre className="text-black bg-white p-4 rounded w-full max-w-xl overflow-x-auto">
-                    {JSON.stringify(data, null, 2)}
+                    {JSON.stringify(data)}
                 </pre>
             </div>
         </div>
